@@ -4,9 +4,7 @@ import { AiOutlineAudioMuted } from "react-icons/ai";
 import { FaClosedCaptioning } from "react-icons/fa6";
 import { FaPauseCircle } from "react-icons/fa";
 import { BsFillRecord2Fill } from "react-icons/bs";
-
-
-
+import { IoSettings } from "react-icons/io5";
 
 import Tool from "../home/Tool";
 
@@ -15,20 +13,27 @@ let demo = () => {
 };
 
 const data = [
-    {
-        hero: false,
-        icon: <BsFillRecord2Fill />,
-        text: "record",
-        action: demo,
-        className: " text-red-600",
-      },
-    {
-        hero: false,
-        icon: <FaPauseCircle />,
-        text: "pause",
-        action: demo,
-        className: "",
-      },
+  {
+    hero: false,
+    icon: <IoSettings />,
+    text: "settings",
+    action: demo,
+    className: " ",
+  },
+  {
+    hero: false,
+    icon: <BsFillRecord2Fill />,
+    text: "record",
+    action: demo,
+    className: " text-red-600",
+  },
+  {
+    hero: false,
+    icon: <FaPauseCircle />,
+    text: "pause",
+    action: demo,
+    className: "",
+  },
   {
     hero: false,
     icon: <IoIosVideocam />,
