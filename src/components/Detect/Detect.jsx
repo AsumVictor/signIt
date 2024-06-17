@@ -200,7 +200,7 @@ const Detect = ({className}) => {
           <TextToSpeech text={gestureOutput} />
         </div>
 
-        <button className=" absolute top-0 left-0" onClick={enableCam}>{webcamRunning ? "Stop" : "Start"}</button>
+        <button className=" absolute bottom-0 left-0" onClick={enableCam}>{webcamRunning ? "Stop" : "Start"}</button>
       </div>
     </>
   );
