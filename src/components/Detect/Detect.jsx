@@ -21,15 +21,14 @@ import TextToSpeech from "../voice/voiceSynthezer";
 
 let startTime = "";
 
-const Detect = ({className}) => {
+const Detect = ({ className }) => {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const mock_data = [
-    'On this tuesday morning, in front of you faculty, we are presenting our prorotype.',
-    'We plan a solution that meets'
-
-  ]
-  const [webcamRunning, setWebcamRunning] = useState(false);
+    "On this tuesday morning, in front of you faculty, we are presenting our prorotype.",
+    "We plan a solution that meets",
+  ];
+  const [webcamRunning, setWebcamRunning] = useState(true);
   const [gestureOutput, setGestureOutput] = useState("");
   const [gestureRecognizer, setGestureRecognizer] = useState(null);
   const [runningMode, setRunningMode] = useState("IMAGE");
@@ -144,8 +143,6 @@ const Detect = ({className}) => {
       setWebcamRunning(false);
       cancelAnimationFrame(requestRef.current);
       setCurrentImage(null);
-
-    
     } else {
       setWebcamRunning(true);
       startTime = new Date();
@@ -160,7 +157,6 @@ const Detect = ({className}) => {
     user?.userId,
     dispatch,
   ]);
-
 
   useEffect(() => {
     async function loadGestureRecognizer() {
@@ -180,9 +176,6 @@ const Detect = ({className}) => {
     loadGestureRecognizer();
   }, [runningMode]);
 
-
-
-
   return (
     <>
       <div className={`${className} bg-slate-400 rounded-3xl overflow-hidden`}>
@@ -200,7 +193,9 @@ const Detect = ({className}) => {
           <TextToSpeech text={gestureOutput} />
         </div>
 
-        <button className=" absolute bottom-0 left-0" onClick={enableCam}>{webcamRunning ? "Stop" : "Start"}</button>
+        <button className=" absolute bottom-40 left-0" onClick={enableCam}>
+          {webcamRunning ? "Stop" : "Start"}
+        </button>
       </div>
     </>
   );
