@@ -28,7 +28,7 @@ const TextToSpeech = ({ text }) => {
     }
   }, [speechSynthesis, text]);
 
-  return null; // This component doesn't render anything visible
+  return null; 
 };
 
 export default TextToSpeech;

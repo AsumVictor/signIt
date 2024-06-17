@@ -5,8 +5,9 @@ import logo from "../../assests/logo2.png";
 import { RiMenu3Line, RiCloseLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../../redux/actions/authaction";
+import Logo from "../../assests/logo_s.svg";
 
-const Navbar = ({ notifyMsg }) => {
+const Navbar = () => {
   const [toggle, setToggle] = useState(false);
 
   const user = useSelector((state) => state.auth?.user);
@@ -17,14 +18,7 @@ const Navbar = ({ notifyMsg }) => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (isLoggedIn && user) {
-      notifyMsg(
-        "success",
-        `Welcome! ${user?.name}, You Logged in Successfully`
-      );
-    }
-  }, [isLoggedIn, user, notifyMsg]);
+  console.log(user);
 
   const handleLogin = () => {
     dispatch(login());
@@ -33,99 +27,36 @@ const Navbar = ({ notifyMsg }) => {
 
   const handleLogout = () => {
     dispatch(logout());
-    notifyMsg("success", "Logged Out Successfully !");
   };
 
   return (
-    <div className="signlang_navbar  gradient__bg">
-      <div className="singlang_navlinks">
-        <div className="signlang_navlinks_logo">
-          <a href="/">
-            <img className="logo" src={logo} alt="logo" />
-          </a>
+    <div className="w-full z-[100] absolute top-0 left-0 px-5 flex justify-center items-center">
+      <nav className="h-[1.2cm] w-10/12 bg-[#1816162c] backdrop-blur-xl rounded-2xl flex px-10 justify-between items-center">
+        {/* LOGO */}
+        <div className=" flex gap-3 flex-row items-center justify-center">
+          <img src={Logo} className="w-[1cm] " />
+          <span className="font-extrabold text-2xl">
+            Sign
+            <span className=" text-primary-800">It</span>
+          </span>
         </div>
 
-        <div className="signlang_navlinks_container">
-          <p>
-            <Link to="/">Home</Link>
-          </p>
+        {/* Dynamic effect */}
+        <div className="w-[2cm] h-[0.2cm]  rounded-3xl bg-[#00000097]"></div>
 
-          <p>
-            <Link to="/detect">Detect</Link>
-          </p>
-
-          {/* <p>
-            <Link to="/guide">Guide</Link>
-          </p> */}
-
-          {accessToken && (
-            <p>
-              <Link to="/dashboard">Dashboard</Link>
-            </p>
-          )}
-        </div>
-
-        <div className="signlang_auth-data">
-          {accessToken ? (
-            <>
-              <img src={user?.photoURL} alt="user-icon" />
-              <button type="button" onClick={handleLogout}>
-                Logout
-              </button>
-            </>
-          ) : (
-            <button type="button" onClick={handleLogin}>
-              Login
-            </button>
-          )}
-        </div>
-      </div>
-
-      <div className="signlang__navbar-menu">
-        {toggle ? (
-          <RiCloseLine
-            color="#fff"
-            size={27}
-            onClick={() => setToggle(false)}
-          />
-        ) : (
-          <RiMenu3Line color="#fff" size={27} onClick={() => setToggle(true)} />
-        )}
-        {toggle && (
-          <div className="signlang__navbar-menu_container scale-up-center">
-            <div className="signlang__navbar-menu_container-links">
-              <p>
-                <Link to="/">Home</Link>
-              </p>
-
-              <p>
-                <Link to="/detect">Detect</Link>
-              </p>
-
-              {accessToken && (
-                <p>
-                  <Link to="/dashboard">Dashboard</Link>
-                </p>
-              )}
-            </div>
-
-            <div className="signlang__navbar-menu_container-links-authdata">
-              {accessToken ? (
-                <>
-                  <img src={user?.photoURL} alt="user-icon" />
-                  <button type="button" onClick={handleLogout}>
-                    Logout
-                  </button>
-                </>
-              ) : (
-                <button type="button" onClick={handleLogin}>
-                  Login
-                </button>
-              )}
-            </div>
+        {/* Profile */}
+        <div className=" flex gap-3 flex-row items-center justify-center">
+          <span className="font-extrabold capitalize text-emerald-700">
+            {user.name.toLowerCase().split(" ")[0] +
+              " " +
+              user.name.toLowerCase().split(" ")[1][0]}
+          </span>
+          <div className=" relative w-[1cm] h-[1cm] ">
+            <img src={user.photoURL} className="w-full h-full rounded-full " />
+            <div className="h-[0.4cm] w-[0.4cm] bg-emerald-600 rounded-full absolute -top-1 -right-1 "></div>
           </div>
-        )}
-      </div>
+        </div>
+      </nav>
     </div>
   );
 };
