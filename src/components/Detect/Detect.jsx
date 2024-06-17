@@ -145,59 +145,7 @@ const Detect = () => {
       cancelAnimationFrame(requestRef.current);
       setCurrentImage(null);
 
-      const endTime = new Date();
-
-      const timeElapsed = (
-        (endTime.getTime() - startTime.getTime()) /
-        1000
-      ).toFixed(2);
-
-      // Remove empty values
-      const nonEmptyData = detectedData.filter(
-        (data) => data.SignDetected !== "" && data.DetectedScore !== ""
-      );
-
-      //to filter continous same signs in an array
-      const resultArray = [];
-      let current = nonEmptyData[0];
-
-      for (let i = 1; i < nonEmptyData.length; i++) {
-        if (nonEmptyData[i].SignDetected !== current.SignDetected) {
-          resultArray.push(current);
-          current = nonEmptyData[i];
-        }
-      }
-
-      resultArray.push(current);
-
-      //calculate count for each repeated sign
-      const countMap = new Map();
-
-      for (const item of resultArray) {
-        const count = countMap.get(item.SignDetected) || 0;
-        countMap.set(item.SignDetected, count + 1);
-      }
-
-      const sortedArray = Array.from(countMap.entries()).sort(
-        (a, b) => b[1] - a[1]
-      );
-
-      const outputArray = sortedArray
-        .slice(0, 5)
-        .map(([sign, count]) => ({ SignDetected: sign, count }));
-
-      // object to send to action creator
-      const data = {
-        signsPerformed: outputArray,
-        id: uuidv4(),
-        username: user?.name,
-        userId: user?.userId,
-        createdAt: String(endTime),
-        secondsSpent: Number(timeElapsed),
-      };
-
-      dispatch(addSignData(data));
-      setDetectedData([]);
+    
     } else {
       setWebcamRunning(true);
       startTime = new Date();
@@ -232,59 +180,53 @@ const Detect = () => {
     loadGestureRecognizer();
   }, [runningMode]);
 
-  useEffect(() => {
 
-    const speak = ()=>{
-      for (let i = 0; i < mock_data.length; i++){
-        console.log(i)
-      }
-    }
-  })
 
-  console.log(gestureOutput)
+
   return (
     <>
-      <div className="signlang_detection-container">
-        {accessToken ? (
-          <>
-            <div style={{ position: "relative" }}>
-              <Webcam
-                audio={false}
-                ref={webcamRef}
-                // screenshotFormat="image/jpeg"
-                className="signlang_webcam"
-              />
+      <div className="  px-3 py-3 w-screen h-screen  relative">
+        <div className=" w-full h-full  relative overflow-hidden rounded-3xl">
+          <Webcam
+            audio={false}
+            ref={webcamRef}
+            height={1200}
+            className="webcam absolute top-0 left-0"
+          />
+          <canvas
+            ref={canvasRef}
+            className="w-full h-full absolute top-0 left-0"
+          />
+          <TextToSpeech text={gestureOutput} />
+        </div>
 
-              <canvas ref={canvasRef} className="signlang_canvas" />
-
-              <div className="signlang_data-container">
-                <button onClick={enableCam}>
-                  {webcamRunning ? "Stop" : "Start"}
-                </button>
-
-                <div className="signlang_data">
-                  {/* <p className="gesture_output">{gestureOutput}</p> */}
-
-                  {progress ? <ProgressBar progress={progress} /> : null}
-                </div>
-              </div>
-            </div>
-
-           <TextToSpeech text={gestureOutput} />
-          </>
-        ) : (
-          <div className="signlang_detection_notLoggedIn">
-            <h1 className="gradient__text">Please Login !</h1>
-            {/* <img src={DisplayImg} alt="diplay-img"/> */}
-            <p>
-              We Save Your Detection Data to show your progress and learning in
-              dashboard, So please Login to Test this Detection Feature.
-            </p>
-          </div>
-        )}
+        <button className=" absolute top-0 left-0" onClick={enableCam}>{webcamRunning ? "Stop" : "Start"}</button>
       </div>
     </>
   );
 };
 
 export default Detect;
+
+// const x = ()=>{
+//   return (
+//       <div className="signlang_detection-container">
+//         <div>
+//           <div className="signlang_data-container">
+//             <button onClick={enableCam}>
+//               {webcamRunning ? "Stop" : "Start"}
+//             </button>
+
+//             <div className="signlang_data">
+//               {/* <p className="gesture_output">{gestureOutput}</p> */}
+
+//               {/* {progress ? <ProgressBar progress={progress} /> : null} */}
+//             </div>
+//           </div>
+
+//           {/* <TextToSpeech text={gestureOutput} /> */}
+//         </div>
+//       </div>
+
+//   )
+// }
