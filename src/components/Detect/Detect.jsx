@@ -13,15 +13,12 @@ import { HAND_CONNECTIONS } from "@mediapipe/hands";
 import Webcam from "react-webcam";
 import { SignImageData } from "../../data/SignImageData";
 import { useDispatch, useSelector } from "react-redux";
-import { addSignData } from "../../redux/actions/signdataaction";
-import ProgressBar from "./ProgressBar/ProgressBar";
 
-import DisplayImg from "../../assests/displayGif.gif";
 import TextToSpeech from "../voice/voiceSynthezer";
 
 let startTime = "";
 
-const Detect = ({ className }) => {
+const Detect = ({ className, handleWords }) => {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const mock_data = [
@@ -117,9 +114,11 @@ const Detect = ({ className }) => {
       ]);
 
       setGestureOutput(results.gestures[0][0].categoryName);
+      handleWords(results.gestures[0][0].categoryName)
       setProgress(Math.round(parseFloat(results.gestures[0][0].score) * 100));
     } else {
       setGestureOutput("");
+      handleWords('')
       setProgress("");
     }
 
@@ -190,7 +189,6 @@ const Detect = ({ className }) => {
             ref={canvasRef}
             className="w-full h-full absolute top-0 left-0"
           />
-          <TextToSpeech text={gestureOutput} />
         </div>
 
         <button className=" absolute bottom-40 left-0" onClick={enableCam}>

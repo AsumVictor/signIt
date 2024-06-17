@@ -46,12 +46,12 @@ const Navbar = () => {
 
         {/* Profile */}
         <div className=" flex gap-3 flex-row items-center justify-center">
-          <span className="font-extrabold capitalize text-emerald-700">
+          <span className="font-extrabold capitalize text-primary-500">
             {user.name.toLowerCase().split(" ")[0] +
               " " +
               user.name.toLowerCase().split(" ")[1][0]}
           </span>
-          <div className=" relative w-[1cm] h-[1cm] ">
+          <div className=" relative w-[1cm] h-[1cm] border-primary-500 border-2 rounded-full">
             <img src={user.photoURL} className="w-full h-full rounded-full " />
             <div className="h-[0.4cm] w-[0.4cm] bg-emerald-600 rounded-full absolute -top-1 -right-1 "></div>
           </div>

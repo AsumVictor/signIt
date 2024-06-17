@@ -137,3 +137,71 @@ a {
     margin: 4rem 2rem;
   }
 }
+
+.audio--visual {
+  height: 20%;
+}
+
+.audio--visual.show {
+  animation: moveUp 0.3s infinite alternate-reverse;
+}
+
+.audio--visual:nth-child(1) {
+  background-color: rgb(64, 27, 119);
+  animation-delay: 0s;
+}
+
+.audio--visual:nth-child(2) {
+  background-color: rgb(51, 19, 100);
+  animation-delay: 50ms;
+}
+.audio--visual:nth-child(3) {
+  background-color: rgb(36, 11, 75);
+  animation-delay: 100ms;
+}
+.audio--visual:nth-child(4) {
+  background-color: rgb(55, 11, 75);
+  animation-delay: 150ms;
+}
+.audio--visual:nth-child(5) {
+  background-color: #300843;
+  animation-delay: 200ms;
+}
+.audio--visual:nth-child(6) {
+  background-color: #430b4a;
+  animation-delay: 70ms;
+}
+.audio--visual:nth-child(7) {
+  background-color: #34093a;
+  animation-delay: 120ms;
+}
+.audio--visual:nth-child(8) {
+  background-color: #2d0532;
+  animation-delay: 170ms;
+}
+.audio--visual:nth-child(9) {
+  background-color: #350636;
+  animation-delay: 10ms;
+}
+.audio--visual:nth-child(10) {
+  background-color: #300431;
+  animation-delay: 40ms;
+}
+
+.audio--visual:nth-child(11) {
+  background-color: #150430;
+  animation-delay: 90ms;
+}
+.audio--visual:nth-child(12) {
+  background-color: #300431;
+}
+
+@keyframes moveUp {
+  from {
+    height: 0%;
+  }
+
+  to {
+    height: 76%;
+  }
+}
