@@ -21,7 +21,7 @@ import TextToSpeech from "../voice/voiceSynthezer";
 
 let startTime = "";
 
-const Detect = () => {
+const Detect = ({className}) => {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const mock_data = [
@@ -185,7 +185,7 @@ const Detect = () => {
 
   return (
     <>
-      <div className="  px-3 py-3 w-screen h-screen  relative">
+      <div className={`${className} bg-slate-400 rounded-3xl overflow-hidden`}>
         <div className=" w-full h-full  relative overflow-hidden rounded-3xl">
           <Webcam
             audio={false}
