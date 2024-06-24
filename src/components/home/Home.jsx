@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Detect from "../Detect/Detect";
-import { FaMicrophone } from "react-icons/fa6";
+import { FaMicrophone, FaRegClosedCaptioning } from "react-icons/fa6";
 import Navbar from "../navbar/Navbar";
 import ToolBar from "../toolBar/ToolBar.jsx";
 import TextSpeakerVisualizer from "../voice/voiceSynthezer.jsx";
@@ -19,6 +19,7 @@ const Home = () => {
   let [words, setWords] = useState("");
   let [isSpeaking, setIsSpeaking] = useState(false);
   let [start, setStart] = useState(false);
+  let [showCaption, setShowCaption] = useState(true);
   let voiceRef = useRef(null);
   const restartWords = (text) => {
     setWords(text);
@@ -95,12 +96,13 @@ const Home = () => {
     },
     {
       focus: false,
-      icon: <FaClosedCaptioning />,
+      icon: <FaRegClosedCaptioning />,
       text: "caption",
       icon2: <FaClosedCaptioning />,
       text2: "caption",
-      action: demo,
+      action: () => setShowCaption((prev) => !prev),
       className: "",
+      value: showCaption,
     },
   ];
   return (
@@ -109,7 +111,11 @@ const Home = () => {
       {/* Render perfomance */}
       <div className=" px-5 py-4 render_space w-full h-full absolute top-0 left-0 overflow-hidden ">
         <div className=" w-full  h-full relative overflow-hidden">
-          <Detect  start={start} className="w-full h-full" handleWords={restartWords} />
+          <Detect
+            start={start}
+            className="w-full h-full"
+            handleWords={restartWords}
+          />
           <div className=" absolute top-0 -right-0 flex flex-col h-full justify-between items-end pb-[2.5cm]">
             <div className=" h-[3.5cm] w-[3.5cm] rounded-2xl  backdrop-blur-xl p-2">
               <div className=" flex justify-center items-center h-full w-full rounded-2xl shadow-2xl text-6xl text-red-800 cursor-pointer backdrop-blur-3xl backdrop-brightness-0 bg-[#ffffff36]">
@@ -129,7 +135,7 @@ const Home = () => {
         </div>
       </div>
 
-      <ToolBar text={words} tools={data} />
+      <ToolBar text={words} tools={data} iscaption={showCaption} />
     </div>
   );
 };
