@@ -11,21 +11,20 @@ import {
 import { HAND_CONNECTIONS } from "@mediapipe/hands";
 
 import Webcam from "react-webcam";
-import { SignImageData } from "../../data/SignImageData";
+
 import { useDispatch, useSelector } from "react-redux";
 
 import TextToSpeech from "../voice/voiceSynthezer";
-
 let startTime = "";
 
-const Detect = ({ className, handleWords }) => {
+const Detect = ({ className, handleWords, start }) => {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const mock_data = [
     "On this tuesday morning, in front of you faculty, we are presenting our prorotype.",
     "We plan a solution that meets",
   ];
-  const [webcamRunning, setWebcamRunning] = useState(true);
+  const [webcamRunning, setWebcamRunning] = useState(false);
   const [gestureOutput, setGestureOutput] = useState("");
   const [gestureRecognizer, setGestureRecognizer] = useState(null);
   const [runningMode, setRunningMode] = useState("IMAGE");
@@ -42,18 +41,6 @@ const Detect = ({ className, handleWords }) => {
   const dispatch = useDispatch();
 
   const [currentImage, setCurrentImage] = useState(null);
-
-  useEffect(() => {
-    let intervalId;
-    if (webcamRunning) {
-      intervalId = setInterval(() => {
-        const randomIndex = Math.floor(Math.random() * SignImageData.length);
-        const randomImage = SignImageData[randomIndex];
-        setCurrentImage(randomImage);
-      }, 5000);
-    }
-    return () => clearInterval(intervalId);
-  }, [webcamRunning]);
 
   if (
     process.env.NODE_ENV === "development" ||
@@ -114,12 +101,10 @@ const Detect = ({ className, handleWords }) => {
       ]);
 
       setGestureOutput(results.gestures[0][0].categoryName);
-      handleWords(results.gestures[0][0].categoryName)
-      setProgress(Math.round(parseFloat(results.gestures[0][0].score) * 100));
+      handleWords(results.gestures[0][0].categoryName);
     } else {
       setGestureOutput("");
-      handleWords('')
-      setProgress("");
+      handleWords("");
     }
 
     if (webcamRunning === true) {
@@ -141,7 +126,6 @@ const Detect = ({ className, handleWords }) => {
     if (webcamRunning === true) {
       setWebcamRunning(false);
       cancelAnimationFrame(requestRef.current);
-      setCurrentImage(null);
     } else {
       setWebcamRunning(true);
       startTime = new Date();
@@ -156,6 +140,23 @@ const Detect = ({ className, handleWords }) => {
     user?.userId,
     dispatch,
   ]);
+
+  useEffect(() => {
+    if (!gestureRecognizer) {
+      alert("Please wait for gestureRecognizer to load");
+      return;
+    }
+
+    if (start === true) {
+      
+      setWebcamRunning(start);
+      startTime = new Date();
+      requestRef.current = requestAnimationFrame(animate);
+    } else {
+      setWebcamRunning(start);
+      cancelAnimationFrame(requestRef.current);
+    }
+  }, [start]);
 
   useEffect(() => {
     async function loadGestureRecognizer() {

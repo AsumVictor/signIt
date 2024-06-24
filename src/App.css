@@ -10,10 +10,9 @@
 }
 
 body {
-  background: rgb(63, 31, 108);
   background: radial-gradient(
     circle,
-    rgba(63, 31, 108, 1) 0%,
+    rgb(42, 7, 170) 0%,
     rgba(241, 241, 255, 1) 100%
   );
   overflow: hidden;
