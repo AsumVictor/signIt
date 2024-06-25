@@ -127,9 +127,7 @@ const Home = () => {
               ref={voiceRef}
               className=" cursor-grab w-[7cm] h-[3cm]  py-2 z-[999] rounded-2xl  backdrop-blur-xl p-2 flex mr-2"
             >
-              <Draggable>
                 <TextSpeakerVisualizer text={words} isSpeaking={isSpeaking} />
-              </Draggable>
             </div>
           </div>
         </div>

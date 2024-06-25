@@ -1,8 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { PiSpeakerSimpleNoneFill } from "react-icons/pi";
+import { motion, useDragControls } from "framer-motion";
 
 const TextToSpeech = ({ text, isSpeaking }) => {
   const [speechSynthesis, setSpeechSynthesis] = useState(null);
+  const controls = useDragControls();
+
+  function startDrag(event) {
+    controls.start(event);
+  }
 
   useEffect(() => {
     const synth = window.speechSynthesis;
@@ -35,23 +41,27 @@ const TextToSpeech = ({ text, isSpeaking }) => {
   }
 
   return (
-    <div className=" w-full h-full backdrop-blur-3xl backdrop-brightness-0 bg-[#ffffff36] flex justify-center items-center text-6xl relative rounded-2xl">
-      <div
-        className={`grid grid-cols-12 absolute top-0 left-0 w-full h-full justify-center items-center px-2 gap-3  `}
-      >
-        {rows.map((i) => (
-          <div
-            className={`${
-              isSpeaking && "show"
-            }  col-span-1 shadow-sm audio--visual rounded-full`}
-          ></div>
-        ))}
-      </div>
-      <PiSpeakerSimpleNoneFill
-        className="relative rounded-2xl z-[10] text-primary-500  backdrop-blur-3xl bg-[#ffffffd3]"
-        size={72}
-      />
-    </div>
+    <>
+      {/* <div onPointerDown={startDrag} /> */}
+
+      <motion.div drag="x" dragControls={controls} className=" w-full h-full backdrop-blur-3xl backdrop-brightness-0 bg-[#ffffff36] flex justify-center items-center text-6xl relative rounded-2xl">
+        <div
+          className={`grid grid-cols-12 absolute top-0 left-0 w-full h-full justify-center items-center px-2 gap-3  `}
+        >
+          {rows.map((i) => (
+            <div
+              className={`${
+                isSpeaking && "show"
+              }  col-span-1 shadow-sm audio--visual rounded-full`}
+            ></div>
+          ))}
+        </div>
+        <PiSpeakerSimpleNoneFill
+          className="relative rounded-2xl z-[10] text-primary-500  backdrop-blur-3xl bg-[#ffffffd3]"
+          size={72}
+        />
+      </motion.div>
+    </>
   );
 };
 

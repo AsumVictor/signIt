@@ -192,9 +192,7 @@ const Detect = ({ className, handleWords, start }) => {
           />
         </div>
 
-        <button className=" absolute bottom-40 left-0" onClick={enableCam}>
-          {webcamRunning ? "Stop" : "Start"}
-        </button>
+       
       </div>
     </>
   );
